@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+/*
+  Design tokens for ModelAutopsy.
+  A dark, clinical "diagnostic instrument" palette rather than a generic
+  dark-mode-plus-neon-accent theme: a cool graphite base, a single
+  controlled signal-teal accent, and a monospace face reserved for
+  numbers and data readouts so every metric in the product reads like an
+  instrument panel value.
+*/
+@theme {
+  /* Surfaces */
+  --color-canvas: #0a0d12;
+  --color-surface: #12161f;
+  --color-surface-hover: #1a1f2b;
+  --color-border: #232937;
+  --color-border-strong: #313a4d;
+
+  /* Text */
+  --color-ink: #e7eaf0;
+  --color-ink-soft: #8c93a6;
+  --color-ink-faint: #5b6274;
+
+  /* Signal / accent */
+  --color-signal: #45d6c4;
+  --color-signal-soft: #103330;
+  --color-warning: #e8a33d;
+  --color-warning-soft: #332508;
+  --color-critical: #e5555c;
+  --color-critical-soft: #331014;
+
+  /* Type */
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+}
+
+body {
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Faint instrument-grid texture for the page canvas - restrained, not decorative */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, #ffffff08 1px, transparent 1px),
+    linear-gradient(to bottom, #ffffff08 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Visible keyboard focus everywhere, styled to match the signal accent */
+:focus-visible {
+  outline: 2px solid var(--color-signal);
+  outline-offset: 2px;
+}
