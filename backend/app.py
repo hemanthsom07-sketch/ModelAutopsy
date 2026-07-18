@@ -14,6 +14,7 @@ Run from the project root (same convention as main.py):
 """
 
 from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from backend.config import DESCRIPTION, PROJECT_NAME, VERSION
@@ -21,6 +22,15 @@ from backend.routers import analyze, autopsy, predict, root, upload
 from backend.utils.errors import ModelAutopsyError
 
 app = FastAPI(title=PROJECT_NAME, version=VERSION, description=DESCRIPTION)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(root.router)
 app.include_router(upload.router)
