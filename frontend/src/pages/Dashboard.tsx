@@ -49,7 +49,7 @@ function Dashboard() {
       </div>
 
       <div className="mt-6">
-        <Charts />
+        <Charts chartData={analysis?.chart_data ?? null} />
       </div>
 
       <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">

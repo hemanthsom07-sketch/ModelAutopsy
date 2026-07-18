@@ -48,6 +48,40 @@ export interface DataQuality {
   warnings: string[]
 }
 
+export interface HistogramData {
+  bin_edges: number[]
+  bin_counts: number[]
+}
+
+export interface CategoryCountData {
+  categories: string[]
+  counts: number[]
+}
+
+export interface MissingValuesChartData {
+  columns: string[]
+  missing_counts: number[]
+}
+
+export interface CorrelationHeatmapData {
+  labels: string[]
+  matrix: (number | null)[][]
+}
+
+export interface TargetDistributionChartData {
+  classes: string[]
+  counts: number[]
+  percentages: number[]
+}
+
+export interface ChartData {
+  histograms: Record<string, HistogramData>
+  category_counts: Record<string, CategoryCountData>
+  missing_values_chart: MissingValuesChartData
+  correlation_heatmap: CorrelationHeatmapData | null
+  target_distribution_chart: TargetDistributionChartData | null
+}
+
 export interface AnalyzeResponse {
   dataset_summary: DatasetSummary
   column_metadata: unknown[]
@@ -57,7 +91,7 @@ export interface AnalyzeResponse {
   data_quality: DataQuality
   correlation_analysis: Record<string, unknown>
   target_inspection: Record<string, unknown> | null
-  chart_data: Record<string, unknown>
+  chart_data: ChartData
   insights: string[]
 }
 
