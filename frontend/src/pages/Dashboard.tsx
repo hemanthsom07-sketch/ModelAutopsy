@@ -15,6 +15,8 @@ import { uploadFile, analyzeDataset, getErrorMessage, type AnalyzeResponse } fro
  * out of scope for Phase 4B.
  */
 function Dashboard() {
+  const [uploadId, setUploadId] = useState<string | null>(null)
+  const [columnNames, setColumnNames] = useState<string[]>([])
   const [analysis, setAnalysis] = useState<AnalyzeResponse | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -25,11 +27,16 @@ function Dashboard() {
 
     try {
       const upload = await uploadFile(file)
+      setUploadId(upload.upload_id)
+      setColumnNames(upload.column_names)
+
       const result = await analyzeDataset(upload.upload_id)
       setAnalysis(result)
     } catch (err) {
       setError(getErrorMessage(err))
       setAnalysis(null)
+      setUploadId(null)
+      setColumnNames([])
     } finally {
       setIsLoading(false)
     }
@@ -53,8 +60,8 @@ function Dashboard() {
       </div>
 
       <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <PredictionResults />
-        <AutopsyResults />
+        <PredictionResults key={`predict-${uploadId ?? 'empty'}`} uploadId={uploadId} columnNames={columnNames} />
+        <AutopsyResults key={`autopsy-${uploadId ?? 'empty'}`} uploadId={uploadId} columnNames={columnNames} />
       </div>
     </main>
   )

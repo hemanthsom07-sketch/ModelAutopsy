@@ -95,6 +95,73 @@ export interface AnalyzeResponse {
   insights: string[]
 }
 
+export interface PredictionResult {
+  model_name: string
+  accuracy: number
+  training_samples: number
+  testing_samples: number
+  possible_id_columns: string[]
+  converted_numeric_columns: string[]
+  warnings: string[]
+}
+
+export interface DominantFailure {
+  actual_class: string
+  predicted_class: string
+  count: number
+  percentage_of_errors: number
+}
+
+export interface NumericFeatureDifference {
+  feature: string
+  metric_type: string
+  value: number | null
+  failure_group_mean: number
+  correct_group_mean: number
+  note?: string
+}
+
+export interface CategoricalFeatureDifference {
+  feature: string
+  metric_type: string
+  value: number
+  failure_group_proportion: number
+  correct_group_proportion: number
+}
+
+export interface ClassPerformanceMetrics {
+  precision: number
+  recall: number
+  'f1-score': number
+  support: number
+}
+
+/** class_performance mixes per-class metric objects with a bare "accuracy" number (from sklearn's classification_report). */
+export type ClassPerformanceEntry = ClassPerformanceMetrics | number
+
+export interface WeakClass {
+  recall: number
+  support: number
+}
+
+export interface AutopsyData {
+  number_of_errors: number
+  has_errors: boolean
+  confusion_patterns: Record<string, number>
+  dominant_failure: DominantFailure | null
+  feature_differences: {
+    numeric: NumericFeatureDifference[]
+    categorical: CategoricalFeatureDifference[]
+  }
+  summary: string
+  class_performance: Record<string, ClassPerformanceEntry>
+  weak_classes: Record<string, WeakClass>
+}
+
+export interface AutopsyResult extends PredictionResult {
+  autopsy: AutopsyData
+}
+
 interface ApiErrorBody {
   error: string
   detail: string
@@ -159,23 +226,26 @@ export function getErrorMessage(error: unknown): string {
   return 'Something went wrong. Please try again.'
 }
 
-// ---------------------------------------------------------------------
-// Not implemented yet - out of scope for Phase 4B (Prediction Results
-// and Model Autopsy are explicitly excluded from this phase).
-// ---------------------------------------------------------------------
-
+/** POST /predict - runs the Prediction Engine against an already-uploaded dataset. */
 export async function predictDataset(
-  _uploadId: string,
-  _targetColumn: string,
-): Promise<never> {
-  // TODO (Phase 4C): POST /predict
-  throw new Error('predictDataset is not implemented yet')
+  uploadId: string,
+  targetColumn: string,
+): Promise<PredictionResult> {
+  const response = await apiClient.post<PredictionResult>('/predict', {
+    upload_id: uploadId,
+    target_column: targetColumn,
+  })
+  return response.data
 }
 
+/** POST /autopsy - runs the Prediction Engine, then the Model Autopsy Engine. */
 export async function autopsyDataset(
-  _uploadId: string,
-  _targetColumn: string,
-): Promise<never> {
-  // TODO (Phase 4C): POST /autopsy
-  throw new Error('autopsyDataset is not implemented yet')
+  uploadId: string,
+  targetColumn: string,
+): Promise<AutopsyResult> {
+  const response = await apiClient.post<AutopsyResult>('/autopsy', {
+    upload_id: uploadId,
+    target_column: targetColumn,
+  })
+  return response.data
 }
