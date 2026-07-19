@@ -66,7 +66,13 @@ function CorrelationHeatmap({ data }: CorrelationHeatmapProps) {
     const result: HeatCell[] = []
     data.labels.forEach((rowLabel, rowIndex) => {
       data.labels.forEach((colLabel, colIndex) => {
-        result.push({ x: colLabel, y: rowLabel, value: data.matrix[rowIndex]?.[colIndex] ?? null })
+        const value = data.matrix[rowIndex]?.[colIndex];  
+
+result.push({
+  x: colLabel,
+  y: rowLabel,
+  value: value ?? null,
+});
       })
     })
     return result
@@ -102,19 +108,43 @@ function CorrelationHeatmap({ data }: CorrelationHeatmapProps) {
             width={90}
           />
           <Tooltip
-            cursor={{ strokeDasharray: '3 3' }}
-            contentStyle={{
-              background: 'var(--color-surface)',
-              border: '1px solid var(--color-border)',
-              borderRadius: 8,
-              fontSize: 12,
-            }}
-            labelStyle={{ color: 'var(--color-ink)' }}
-            formatter={(value: unknown) => {
-              const numeric = value as number | null
-              return [numeric === null ? 'n/a' : numeric.toFixed(2), 'correlation']
-            }}
-          />
+  cursor={{ strokeDasharray: "3 3" }}
+  content={({ active, payload }) => {
+    if (!active || !payload || payload.length === 0) {
+      return null;
+    }
+
+    const cell = payload[0].payload as HeatCell;
+
+    return (
+      <div
+        style={{
+          background: "var(--color-surface)",
+          border: "1px solid var(--color-border)",
+          borderRadius: 8,
+          padding: "10px 12px",
+          color: "var(--color-ink)",
+          fontSize: 12,
+        }}
+      >
+        <div style={{ fontWeight: 600, marginBottom: 6 }}>
+          {cell.y}
+        </div>
+
+        <div style={{ marginBottom: 4 }}>
+          <strong>vs</strong> {cell.x}
+        </div>
+
+        <div>
+          <strong>Correlation:</strong>{" "}
+          {cell.value !== null
+            ? cell.value.toFixed(2)
+            : "N/A"}
+        </div>
+      </div>
+    );
+  }}
+/>
           <Scatter data={cells} shape={HeatmapCell} isAnimationActive={false} />
         </ScatterChart>
       </ResponsiveContainer>

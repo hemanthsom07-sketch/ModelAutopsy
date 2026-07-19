@@ -40,6 +40,11 @@ def run_prediction_engine(
     X = data.drop(columns=[target_column])
     y = data[target_column]
 
+# Remove unwanted index columns like "Unnamed: 0"
+    unnamed_columns = [col for col in X.columns if col.startswith("Unnamed")]
+    if unnamed_columns:
+        X = X.drop(columns=unnamed_columns)
+
     # --------------------------------------------------------------
     # SCHEMA-LEVEL STEPS (safe to run before the split)
     #
@@ -78,6 +83,10 @@ def run_prediction_engine(
     numeric_columns = X.select_dtypes(
         include="number"
     ).columns.tolist()
+
+    # Convert all categorical columns to strings
+    for column in categorical_columns:
+        X[column] = X[column].astype(str)
 
     if len(categorical_columns) == 0 and len(numeric_columns) == 0:
         raise ValueError(
