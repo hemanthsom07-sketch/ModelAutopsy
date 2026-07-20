@@ -1,4 +1,29 @@
+<div align="center">
+
 # 🧠 ModelAutopsy
+
+![ModelAutopsy Home](frontend/src/assets/screenshots/home.png)
+
+![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python)
+![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688?logo=fastapi)
+![React](https://img.shields.io/badge/React-Frontend-61DAFB?logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript)
+![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-ML-F7931E?logo=scikitlearn)
+![License](https://img.shields.io/badge/License-MIT-green)
+
+An AI-powered machine learning platform for dataset analysis, model training, prediction, and explainable AI through an interactive React dashboard.
+
+</div>
+
+## 📑 Table of Contents
+
+- [Features](#-features)
+- [Tech Stack](#-tech-stack)
+- [Project Structure](#-project-structure)
+- [Screenshots](#-screenshots)
+- [Installation](#-installation)
+- [Future Improvements](#-future-improvements)
+- [Author](#-author)
 
 An end-to-end Machine Learning Analysis and Prediction Platform built with **FastAPI**, **React**, **TypeScript**, and **Scikit-learn**.
 
@@ -50,6 +75,29 @@ ModelAutopsy enables users to upload datasets, analyze data quality, train machi
 - VS Code
 
 ---
+## 🔄 Project Workflow
+
+```text
+Dataset (CSV)
+      │
+      ▼
+Data Preprocessing
+      │
+      ▼
+Exploratory Data Analysis
+      │
+      ▼
+Feature Engineering
+      │
+      ▼
+Model Training & Evaluation
+      │
+      ▼
+Predictions & Explainability
+      │
+      ▼
+Interactive React Dashboard
+```
 
 ## 📂 Project Structure
 
@@ -140,3 +188,21 @@ The application will be available at:
 ## 🧠 Model Autopsy
 
 ![Model Autopsy](frontend/src/assets/screenshots/model_autopsy.png)
+
+## 🚀 Future Improvements
+
+- Deploy the application for public access.
+- Support additional machine learning algorithms.
+- Add user authentication and project history.
+- Enable dataset versioning and experiment tracking.
+- Integrate advanced explainable AI techniques such as SHAP and LIME.
+- Support deep learning models using TensorFlow and PyTorch.
+
+## 👨‍💻 Author
+
+**Hemanth R.S**
+
+- GitHub: https://github.com/hemanthsom07-sketch
+- LinkedIn: *(Add your LinkedIn profile URL here when you have one.)*
+
+If you found this project helpful, consider giving it a ⭐ on GitHub!
