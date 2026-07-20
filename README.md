@@ -189,6 +189,12 @@ The application will be available at:
 
 ![Model Autopsy](frontend/src/assets/screenshots/model_autopsy.png)
 
+## 🌐 Live Demo
+
+- **Frontend:** https://model-autopsy.vercel.app
+- **Backend API:** https://modelautopsy.onrender.com
+- **API Documentation (Swagger):** https://modelautopsy.onrender.com/docs
+
 ## 🚀 Future Improvements
 
 - Deploy the application for public access.
